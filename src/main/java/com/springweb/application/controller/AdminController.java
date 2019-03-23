@@ -31,7 +31,6 @@ import com.springweb.application.sevice.UsersSevice;
 
 @RestController
 @RequestMapping("/admin")
-
 public class AdminController {
 
 	@Autowired
@@ -57,9 +56,9 @@ public class AdminController {
 		msgContent.append(token);
 		int result=emailService.sendEmailTo(user.getEmail(), msgContent.toString());
 		if(result==0) {
-			map.put("error", "gửi email thất bại");
+			map.put("code", "1002");
 			}
-		else map.put("success", "gửi email thành công");
+		else map.put("code", "1000");
 		return map;
 		
 		

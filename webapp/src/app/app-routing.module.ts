@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import {Routes, RouterModule} from '@angular/router';
 import {LoginComponent} from './user/login/login.component';
 import {ManageListComponent} from './layouts/manage-list/manage-list.component';
+import {AuthGuardService} from './services/auth-guard.service';
 const ROUTES: Routes = [
-  { path: '', component: ManageListComponent },
   { path: 'login', component: LoginComponent },
+  { path: '', component: ManageListComponent, canActivate: [AuthGuardService] },
+
 ];
 
 @NgModule({
@@ -16,6 +18,9 @@ const ROUTES: Routes = [
   ],
   exports:[
     RouterModule,
+  ],
+  providers:[
+    AuthGuardService,
   ]
 })
 export class AppRoutingModule {

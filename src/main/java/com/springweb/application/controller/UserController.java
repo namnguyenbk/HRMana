@@ -15,6 +15,7 @@ import com.springweb.application.model.UsersEntity;
 import com.springweb.application.repository.RoleRepository;
 import com.springweb.application.repository.UsersRepository;
 
+
 @RestController
 public class UserController {
 
@@ -29,21 +30,24 @@ public class UserController {
 	public Map<String, Object> register(@RequestBody UsersEntity user){
 		Map<String, Object> mapResponse=new HashMap<>();
 		if(user.getEmail()==null) {
-			mapResponse.put("validation", "Bạn chưa có email!Vui lòng nhập email");
+			mapResponse.put("code", "1001");
+			mapResponse.put("invalid_data", "email");
 			return  mapResponse;
 		}
 		if(user.getUsername()==null) {
-			mapResponse.put("validation", "Bạn chưa có username!Vui lòng nhập username");
+			mapResponse.put("code", "1001");
+			mapResponse.put("invalid_data", "username");
 			return  mapResponse;
 		}
 		if(user.getPassword()==null) {
-			mapResponse.put("validation", "Bạn chưa có password!Vui lòng nhập password");
+			mapResponse.put("code", "1001");
+			mapResponse.put("invalid_data", "password");
 			return  mapResponse;
 		}
 		
 		
 		if(userRepository.existsByUsername(user.getUsername())==true) {
-			mapResponse.put("error", "Đã tồn tại tài khoản");
+			mapResponse.put("code", "1100");
 			return  mapResponse;
 		}
 		
@@ -53,10 +57,10 @@ public class UserController {
 		try {
 			userRepository.save(user);
 		} catch (Exception e) {
-			mapResponse.put("error", "Có lỗi xảy ra");
+			mapResponse.put("code", "1002");
 			return  mapResponse;
 		}
-		mapResponse.put("success", "Thêm tài khoản thành công");
+		mapResponse.put("code", "1000");
 		return  mapResponse;
 	}
 

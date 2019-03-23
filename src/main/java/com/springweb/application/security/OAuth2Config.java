@@ -30,6 +30,7 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter{
 
 	@Value("${config.oauth2.publicKey}")
 	private String publicKey;
+
 	@Autowired
 	@Qualifier("authenticationManager")
 	private AuthenticationManager authenticationManager;

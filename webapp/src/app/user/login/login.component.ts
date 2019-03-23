@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   login() : void{
     if(this.username == 'admin' && this.password == 'admin'){
-      this.routes.navigate(['home']);
+      this.routes.navigate(['']);
     }else{
       alert("Usernaem or password is not validate!");
     }

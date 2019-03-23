@@ -26,9 +26,9 @@ public class VerifyController {
 		user.setStatus("VERIFY");
 		try {
 			userService.save(user);
-			map.put("success", "Xác thực email thành công");
+			map.put("code", "1000");
 		} catch (Exception e) {
-			map.put("error", "Lỗi xác thực");
+			map.put("code", "888");
 			e.printStackTrace();
 		}
 		

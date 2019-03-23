@@ -5,10 +5,12 @@ import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot }
 let username = localStorage.getItem('username') || '';
 let guest = (username) ? false : true;
 let token = localStorage.getItem('token' || '');
+
 @Injectable()
 export class AuthGuardService {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (!this.isGuest()) {
@@ -38,12 +40,13 @@ export class AuthGuardService {
   }
 
   logout() {
+    alert("Nam");
     username = '';
     token = '';
     guest = true;
     localStorage.setItem('username', '');
     localStorage.setItem('token', '');
-    this.router.navigate(['/login']);
+    this.router.navigate(['login']);
   }
 
 }

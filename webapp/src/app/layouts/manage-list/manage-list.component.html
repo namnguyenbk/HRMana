@@ -59,20 +59,27 @@
   </td-layout-nav>
 </td-layout> -->
 <td-layout>
-  <td-navigation-drawer flex sidenavTitle="Covalent" logo="teradata-dark" name="Firstname Lastname" email="firstname.lastname@company.com">
+  <td-navigation-drawer flex sidenavTitle="Covalent" logo="teradata-dark" name="Firstname Lastname"
+    email="firstname.lastname@company.com">
     <mat-nav-list>
-      <a *ngFor="let item of routes" mat-list-item><mat-icon>{{item.icon}}</mat-icon>{{item.title}}</a>
+      <a *ngFor="let item of routes" mat-list-item>
+        <mat-icon>{{item.icon}}</mat-icon>{{item.title}}
+      </a>
     </mat-nav-list>
     <div td-navigation-drawer-menu>
       <mat-nav-list>
-        <a *ngFor="let item of usermenu" mat-list-item><mat-icon>{{item.icon}}</mat-icon>{{item.title}}</a>
+        <a *ngFor="let item of usermenu" mat-list-item >
+          <mat-icon>{{item.icon}}</mat-icon>{{item.title}}
+        </a>
+        <a mat-list-item (click)="logout()">
+            <mat-icon>{{usermenu[2].icon}}</mat-icon>{{usermenu[2].title}}
+          </a>
       </mat-nav-list>
     </div>
   </td-navigation-drawer>
-  <td-layout-nav-list #navList
-        [opened]="media.registerQuery('gt-sm') | async"
-        [mode]="(media.registerQuery('gt-sm') | async) ? 'side' : 'over'"
-        [sidenavWidth]="(media.registerQuery('gt-xs') | async) ? '250px' : '100%'">
+  <td-layout-nav-list #navList [opened]="media.registerQuery('gt-sm') | async"
+    [mode]="(media.registerQuery('gt-sm') | async) ? 'side' : 'over'"
+    [sidenavWidth]="(media.registerQuery('gt-xs') | async) ? '250px' : '100%'">
     <div td-sidenav-toolbar-content layout="row" layout-align="start center">
       <button mat-icon-button tdLayoutToggle>
         <mat-icon>menu</mat-icon>
@@ -90,10 +97,10 @@
       <a mat-icon-button matTooltip="Github" href="https://github.com/teradata/covalent" target="_blank"><mat-icon>github</mat-icon></a>
     </div> -->
     <div td-toolbar-content layout="row" layout-align="end center" flex>
-        <span flex></span>
-        <a routerLink="/invoices" md-button class="mat-button">Invoices</a>
-        <a routerLink="/customers" md-button class="mat-button">Customers</a>
-      </div>
+      <span flex></span>
+      <a routerLink="/invoices" md-button class="mat-button">Invoices</a>
+      <a routerLink="/customers" md-button class="mat-button">Customers</a>
+    </div>
     <mat-nav-list td-sidenav-content [tdLayoutNavListClose]="!media.query('gt-sm')">
       <ng-template let-item let-last="last" ngFor [ngForOf]="navmenu">
         <a mat-list-item>
