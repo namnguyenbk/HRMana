@@ -8,11 +8,15 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Configurable
 @EnableWebSecurity
@@ -33,19 +37,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(customDetailSService).passwordEncoder(encoder());
 	}
 	@Override
-	protected void configure (HttpSecurity http) throws Exception {
+	protected void configure(HttpSecurity http) throws Exception {
+//		http.requestMatchers().antMatchers("register")
+		
+		http.csrf().disable();
 		http.authorizeRequests()
-			.antMatchers(HttpMethod.POST,"/register").permitAll()
-			.and()
-			.authorizeRequests()
-			.antMatchers("/admin/**").hasRole("admin")
-			.and()
-			.authorizeRequests()
 			.anyRequest().authenticated()
 			.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER);
+
 			
 	}
+	
 	@Override
 	@Bean
 	public AuthenticationManager authenticationManager() throws Exception{

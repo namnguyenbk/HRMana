@@ -8,5 +8,6 @@ import com.springweb.application.model.RoleEntity;
 
 @Repository
 public interface RoleRepository extends JpaRepository<RoleEntity, Integer>{
+
 	RoleEntity findByName(String name);
 }

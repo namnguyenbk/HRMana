@@ -15,8 +15,6 @@ import com.springweb.application.repository.RoleRepository;
 import com.springweb.application.repository.UsersRepository;
 
 @SpringBootApplication
-@EnableAuthorizationServer
-@EnableResourceServer
 @Configurable
 public class SpringWebApplication {
 

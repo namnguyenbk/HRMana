@@ -60,8 +60,6 @@ public class AdminController {
 			}
 		else map.put("code", "1000");
 		return map;
-		
-		
 	}
 	
 	

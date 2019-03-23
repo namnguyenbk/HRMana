@@ -5,10 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.springweb.application.model.RoleEntity;
 import com.springweb.application.model.UsersEntity;
@@ -26,7 +23,7 @@ public class UserController {
 	RoleRepository roleRepository;
 	@Autowired
 	UsersRepository userRepository;
-	@PostMapping("/register")
+	@RequestMapping(value="/register",method= RequestMethod.POST)
 	public Map<String, Object> register(@RequestBody UsersEntity user){
 		Map<String, Object> mapResponse=new HashMap<>();
 		if(user.getEmail()==null) {
