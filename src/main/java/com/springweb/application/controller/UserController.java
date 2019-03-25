@@ -62,6 +62,7 @@ public class UserController {
 		user.setPassword(encoder.encode(user.getPassword()));
 		RoleEntity roleEntity=roleRepository.findById(Integer.valueOf(2)).get();
 		user.setRole(roleEntity);
+			user.setStatus("UNVERIFY");
 		try {
 			int code = sendEmail(user) ;
 			if (code == 1000){
