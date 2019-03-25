@@ -21,9 +21,9 @@ public class VerifyController {
 	UsersEntity user=userService.getUserByToken(token);
 	Map<String, Object> map=new HashMap<String, Object>();
 	if(user==null) {
-		map.put("error", "Lỗi xác thực");
+		map.put("code", "1401");
 	}else {
-		user.setStatus("VERIFY");
+		user.setStatus("VERIFYING");
 		try {
 			userService.save(user);
 			map.put("code", "1000");

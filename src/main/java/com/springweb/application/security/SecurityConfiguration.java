@@ -43,6 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 		http.authorizeRequests()
 			.anyRequest().authenticated()
+				.antMatchers("/getUserDetailInfo").authenticated()
 			.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER);
 
@@ -50,6 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Override
+
 	@Bean
 	public AuthenticationManager authenticationManager() throws Exception{
 		return super.authenticationManager();

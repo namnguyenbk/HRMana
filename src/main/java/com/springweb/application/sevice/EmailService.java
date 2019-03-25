@@ -44,7 +44,7 @@ public class EmailService {
 		msg.setFrom(address);
 
 		msg.setRecipient(Message.RecipientType.TO,(Address)InternetAddress.parse(emailAddress)[0]);
-		msg.setSubject("Chuyen toi trang ");
+		msg.setSubject("Redirect to: ");
 		msg.setContent(msgContent, "text/html");
 		msg.setSentDate(new Date());
 		Transport.send(msg);

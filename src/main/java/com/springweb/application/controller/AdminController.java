@@ -45,22 +45,22 @@ public class AdminController {
 		return usersUnverify;
 	}
 	
-	@PostMapping("/sendEmail")
-	public Map<String, Object> sendEmail(@RequestBody UsersEntity user){
-		Map<String, Object> map=new HashMap<String, Object>();
-		StringBuilder msgContent=new StringBuilder("http://localhost:9000/verify:");
-		UUID uuid=UUID.randomUUID();
-		String token=uuid.toString();
-		user.setTokenEmail(token);
-		usesService.save(user);
-		msgContent.append(token);
-		int result=emailService.sendEmailTo(user.getEmail(), msgContent.toString());
-		if(result==0) {
-			map.put("code", "1002");
-			}
-		else map.put("code", "1000");
-		return map;
-	}
+//	@PostMapping("/sendEmail")
+//	public Map<String, Object> sendEmail( UsersEntity user){
+//		Map<String, Object> map=new HashMap<String, Object>();
+//		StringBuilder msgContent=new StringBuilder("http://localhost:9000/verify:");
+//		UUID uuid=UUID.randomUUID();
+//		String token=uuid.toString();
+//		user.setTokenEmail(token);
+//		usesService.save(user);
+//		msgContent.append(token);
+//		int result=emailService.sendEmailTo(user.getEmail(), msgContent.toString());
+//		if(result==0) {
+//			map.put("code", "1002");
+//			}
+//		else map.put("code", "1000");
+//		return map;
+//	}
 	
 	
 	

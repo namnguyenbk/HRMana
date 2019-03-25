@@ -7,6 +7,8 @@ import {CommonModuleUi} from '../common-module-ui.module';
 
 import { UserRoutingModule } from './user-routing.module';
 
+import { AuthGuardService } from 'src/app/services/auth-guard.service';
+
 @NgModule({
   declarations: [RegisterComponent, LoginComponent, HeaderComponent],
   imports: [
@@ -17,5 +19,8 @@ import { UserRoutingModule } from './user-routing.module';
   bootstrap:[
 
   ],
+  providers:[
+    AuthGuardService,
+  ]
 })
 export class UserModule { }

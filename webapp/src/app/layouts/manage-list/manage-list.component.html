@@ -59,21 +59,26 @@
   </td-layout-nav>
 </td-layout> -->
 <td-layout>
-  <td-navigation-drawer flex sidenavTitle="Covalent" logo="teradata-dark" name="Firstname Lastname"
+  <td-navigation-drawer flex sidenavTitle="Tài khoản" logo="teradata-dark" name="Firstname Lastname"
     email="firstname.lastname@company.com">
     <mat-nav-list>
-      <a *ngFor="let item of routes" mat-list-item>
-        <mat-icon>{{item.icon}}</mat-icon>{{item.title}}
+      <a mat-list-item>
+        <mat-icon>home</mat-icon>Trang chủ
       </a>
+      <a mat-list-item>
+        <mat-icon>account_box</mat-icon>Thông tin tài khoản
+      </a>
+      <a mat-list-item *ngIf="isRoleAdmin()">
+          <mat-icon>how_to_reg</mat-icon>Duyệt tài khoản
+        </a>
+      <a mat-list-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>Đăng xuất
+      </a>
+
     </mat-nav-list>
     <div td-navigation-drawer-menu>
       <mat-nav-list>
-        <a *ngFor="let item of usermenu" mat-list-item >
-          <mat-icon>{{item.icon}}</mat-icon>{{item.title}}
-        </a>
-        <a mat-list-item (click)="logout()">
-            <mat-icon>{{usermenu[2].icon}}</mat-icon>{{usermenu[2].title}}
-          </a>
+       
       </mat-nav-list>
     </div>
   </td-navigation-drawer>
@@ -85,39 +90,41 @@
         <mat-icon>menu</mat-icon>
       </button>
       <mat-icon [routerLink]="['/']" class="mat-icon-logo cursor-pointer" svgIcon="assets:teradata"></mat-icon>
-      <span [routerLink]="['/']" class="cursor-pointer">Covalent</span>
+      <span [routerLink]="['/']" class="cursor-pointer">Quản lí công việc</span>
     </div>
-    <!-- <div td-toolbar-content layout="row" layout-align="start center" flex>
-      <button mat-icon-button tdLayoutNavListOpen [hideWhenOpened]="true">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-      <span>Page Title</span>
+    <div td-toolbar-content layout="row" layout-align="start center" flex>
       <span flex></span>
-      <a mat-icon-button matTooltip="Docs" href="https://teradata.github.io/covalent/" target="_blank"><mat-icon>chrome_reader_mode</mat-icon></a>
-      <a mat-icon-button matTooltip="Github" href="https://github.com/teradata/covalent" target="_blank"><mat-icon>github</mat-icon></a>
-    </div> -->
-    <div td-toolbar-content layout="row" layout-align="end center" flex>
-      <span flex></span>
-      <a routerLink="/invoices" md-button class="mat-button">Invoices</a>
-      <a routerLink="/customers" md-button class="mat-button">Customers</a>
+      <a routerLink="/invoices" md-button class="mat-button">Cá nhân</a>
+      <a routerLink="/customers" md-button class="mat-button">Nhóm</a>
+      <!-- <a mat-icon-button matTooltip="Docs" href="" target="_blank">
+        <mat-icon>account_circle</mat-icon>
+      </a> -->
+    </div>
+    <div td-toolbar-content flex>
+      <span class="fill-space" flex></span>
+      <a mat-icon-button matTooltip="Docs" href="" target="_blank">
+        <mat-icon>account_circle</mat-icon>
+      </a>
     </div>
     <mat-nav-list td-sidenav-content [tdLayoutNavListClose]="!media.query('gt-sm')">
-      <ng-template let-item let-last="last" ngFor [ngForOf]="navmenu">
-        <a mat-list-item>
-          <mat-icon matListAvatar>{{item.icon}}</mat-icon>
-          <h3 matLine> {{item.title}} </h3>
-          <p matLine> {{item.description}} </p>
-        </a>
-        <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
-      </ng-template>
+      <a mat-list-item>
+        <mat-icon matListAvatar>work</mat-icon>
+        <h3 matLine>Đồ án 3</h3>
+        <p matLine>Spring, Angular</p>
+      </a>
+      <mat-divider [inset]="true"></mat-divider>
+      <a mat-list-item>
+        <mat-icon matListAvatar>work</mat-icon>
+        <h3 matLine> BTL IT4409 </h3>
+        <p matLine>Angular + ExpressJs</p>
+      </a>
+      <mat-divider [inset]="true"></mat-divider>
     </mat-nav-list>
-    <!-- <td-layout-footer-inner>
-      Optional inner footer
-    </td-layout-footer-inner> -->
-    <td-layout-footer>
-      <div layout="row" layout-align="start center">
-        <span class="mat-caption">Copyright &copy; 2017 Teradata. All rights reserved</span>
-      </div>
-    </td-layout-footer>
   </td-layout-nav-list>
+
+  <td-layout-footer>
+    <div layout="row" layout-align="start center">
+      <span class="mat-caption">Copyright &copy; 2019 NAHUEN. All rights reserved</span>
+    </div>
+  </td-layout-footer>
 </td-layout>

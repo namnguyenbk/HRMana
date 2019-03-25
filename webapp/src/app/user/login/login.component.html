@@ -1,6 +1,5 @@
-<mat-toolbar color="warn" class="header-login" role="heading">
-  <span>Quản lí nhân sự</span>
-</mat-toolbar>
+
+<app-header></app-header>
 <mat-card class="login-card">
   <mat-card-header>
     <mat-card-title>Đăng nhập</mat-card-title>
@@ -25,5 +24,6 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button (click)="login()" color="warn">Đăng nhập</button>
+    <a [routerLink]="['/register']"> hoặc đăng ký tài khoản!</a>
   </mat-card-actions>
 </mat-card>

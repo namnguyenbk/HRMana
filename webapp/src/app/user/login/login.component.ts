@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, RoutesRecognized} from '@angular/router';
-import {MatDialog} from '@angular/material'
+import { Router, RoutesRecognized } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { AuthGuardService } from 'src/app/services/auth-guard.service';
+// import {Au} from '../../services/auth-guard.service';
+
 
 
 @Component({
@@ -9,19 +12,14 @@ import {MatDialog} from '@angular/material'
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  constructor( private routes : Router) { }
-  username : string;
-  password : string;
+  constructor(private routes: Router, private authService: AuthGuardService) { }
+  username: string;
+  password: string;
 
   ngOnInit() {
   }
 
-  login() : void{
-    if(this.username == 'admin' && this.password == 'admin'){
-      this.routes.navigate(['']);
-    }else{
-      alert("Usernaem or password is not validate!");
-    }
+  login(): void {
+    this.authService.login(this.username, this.password);
   }
-
 }

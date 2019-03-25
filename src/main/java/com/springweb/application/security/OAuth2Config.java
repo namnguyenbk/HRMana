@@ -37,17 +37,20 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter{
 	private AuthenticationManager authenticationManager;
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) {
-		security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
+		security.tokenKeyAccess("permitAll()")
+				.checkTokenAccess("isAuthenticated()")
+				.allowFormAuthenticationForClients();
 	}
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception{
+		System.out.println(clients.toString());
 		clients.inMemory()
 				.withClient(clientid)
 				.secret(clientSecret)
 				.scopes("read", "write")
 				.authorizedGrantTypes("password","refresh_token")
-				.accessTokenValiditySeconds(120000)
-				.refreshTokenValiditySeconds(18000);
+				.accessTokenValiditySeconds(86400)
+				.refreshTokenValiditySeconds(86400);
 	}
 	
 	@Override

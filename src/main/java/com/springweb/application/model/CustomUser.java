@@ -7,38 +7,41 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-public class CustomUser extends User{
-	private static final long serialVersionUID = 1L;
-public String getId() {
-		return id;
-	}
+public class CustomUser extends User {
+    private static final long serialVersionUID = 1L;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-private String id;
-private String email;
-private static Collection<GrantedAuthority> getAuthorities(UsersEntity user){
-	Collection<GrantedAuthority> grantedAuthorities=new ArrayList<>();
-	if(user.getRole()!=null) {
-		
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_"+user.getRole().getName()));
-	}
-	return grantedAuthorities;
-}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-public CustomUser(UsersEntity user) {
-	super(user.getUsername(), user.getPassword(), getAuthorities(user));
-	this.id=user.getId();
-	this.email=user.getEmail();
-}
+
+    private String id;
+    private String email;
+
+    private static Collection<GrantedAuthority> getAuthorities(UsersEntity user) {
+        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        if (user.getRole() != null) {
+
+            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().getName()));
+        }
+        return grantedAuthorities;
+    }
+
+    public CustomUser(UsersEntity user) {
+        super(user.getUsername(), user.getPassword(), getAuthorities(user));
+        this.id = user.getId();
+        this.email = user.getEmail();
+    }
 }

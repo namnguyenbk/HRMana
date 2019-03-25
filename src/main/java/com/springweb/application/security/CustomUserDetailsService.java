@@ -23,13 +23,17 @@ public class CustomUserDetailsService implements UserDetailsService{
 		try {
 			userEntity=usersRepository.findByUsername(username);
 			if (userEntity!=null&& userEntity.getEmail() != null && userEntity.getUsername()!=null) {
-			            CustomUser user=new CustomUser(userEntity);
-			            return user;
+//				if(userEntity.getStatus() == null){
+//					return null;
+//				}
+				CustomUser user=new CustomUser(userEntity);
+				return user;
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return null;
 	}
+
 
 }
