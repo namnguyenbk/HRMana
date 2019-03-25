@@ -49,7 +49,7 @@ public class RoleEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
+	@JsonIgnore
 	public Set<UsersEntity> getUsers() {
 		return users;
 	}
