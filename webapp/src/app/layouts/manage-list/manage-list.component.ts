@@ -1,9 +1,12 @@
 
-import { Component, HostBinding, ChangeDetectionStrategy } from '@angular/core';
+import { Component, HostBinding, ChangeDetectionStrategy, OnInit, OnChanges } from '@angular/core';
 
 import { TdMediaService } from '@covalent/core/media';
 import { AuthGuardService } from '../../services/auth-guard.service';
 import {UserInfoServiceService} from '../../services/user/user-info-service.service';
+
+import { UserInfo } from '../../interface/user-interface';
+
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'layouts-manage-list',
@@ -14,14 +17,25 @@ import {UserInfoServiceService} from '../../services/user/user-info-service.serv
     AuthGuardService,
   ]
 })
-export class ManageListComponent {
-
+export class ManageListComponent implements OnInit {
+  userInfo : UserInfo;
   constructor(public media: TdMediaService, 
     private authService : AuthGuardService,
-    private userInfoSerivce : UserInfoServiceService) { }
+    private userInfoSerivce : UserInfoServiceService) {
+      
+      this.userInfoSerivce.getUserInfo().subscribe( (resData : UserInfo ) =>{
+        this.userInfo = resData;
+      });
+    }
 
+    ngOnInit(){
+    }
+  
   isRoleAdmin() : boolean{
-    return true;
+    if( this.userInfo.role && this.userInfo.role == '1'){
+      return true;
+    }
+    return false;
   }
 
   logout() : void {

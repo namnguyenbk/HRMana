@@ -18,6 +18,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .permitAll()
 //			 .and()
 //			 .authorizeRequests()
+                .antMatchers("/getUserDetailInfo").permitAll()
                 .antMatchers(HttpMethod.POST, "/getStatusUser")
                 .permitAll()
                 .antMatchers("/hello").access("hasRole('user')")

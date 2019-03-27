@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
 
   register() : void{
     if(this.password != this.passwordConf){
-      alert("Hai mat khau khong trung nhau");
+      this.authService.openAlert('Hai mật khẩu không trùng nhau!');
     }else{
       this.authService.registration(this.username, this.password, this.email, this.fname, this.lname)
       

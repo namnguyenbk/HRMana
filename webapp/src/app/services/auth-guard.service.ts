@@ -7,11 +7,13 @@ import { HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 
 import { CookieService } from 'ngx-cookie-service';
+import { error } from 'util';
 
 let currentTokenData: jwtData;
 const loginApi: string = "http://localhost:9090/oauth/token";
 const registrationApi: string = "http://localhost:9090/register";
 const getStatusApi: string = "http://localhost:9090/getStatusUser";
+const verifyApi: string = "http://localhost:9090/verify?verify_code=";
 
 const httpOptionsAuth = {
   headers: new HttpHeaders({
@@ -41,6 +43,11 @@ export interface jwtData {
   jti: string;
 }
 
+export interface commonRes {
+  code : string;
+  data : string;
+}
+
 @Injectable()
 export class AuthGuardService {
 
@@ -62,14 +69,17 @@ export class AuthGuardService {
   }
 
   isGuest() {
-    if (this.cookieService.get('access_token')) {
+    if (localStorage.getItem('access_token')) {
       // let refreshToken = {
-      //   'grant_type' : 'refresh_token',
-      //   'refesh_token' : this.cookieService.get('refresh_token'),
+      //   'grant_type': 'refresh_token',
+      //   'refesh_token': this.cookieService.get('refresh_token'),
       // }
 
-      // this.http.post<jwtData>( loginApi,refreshToken , httpOptions).subscribe( tokenData =>{
-      //   this.cookieTokenData(tokenData);
+      // this.http.post<jwtData>(loginApi, refreshToken, httpOptions).subscribe(tokenData => {
+      //   localStorage.setItem('acces_token', tokenData.access_token);
+      //   localStorage.setItem('refresh_token', tokenData.refresh_token);
+      // }, error => {
+      //   return true;
       // });
       return false;
     } else {
@@ -90,42 +100,46 @@ export class AuthGuardService {
     const userLoginDataEncodedUrl = Object.keys(user).filter(k => user.hasOwnProperty(k)).map(
       k => encodeURIComponent(k) + '=' + encodeURIComponent(user[k])).join('&');
     this.http.post<jwtData>(loginApi, userLoginDataEncodedUrl, httpOptionsAuth).subscribe(tokenData => {
-      this.cookieTokenData(tokenData);
+      this.cookieTokenData(tokenData, usernameLg);
+    }, error =>{
+      if( error.message == "Unauthorized"){
+        this.openAlert('Có lỗi khi đăng nhập!');
+
+      }
     });
-    
-   this.http.post(getStatusApi, JSON.stringify({"username": user.username}), httpOptions )
-   .subscribe( (res : any) =>{
-     if( res.status == 'VERIFY'){
-      this.router.navigate(['']);
-     }else{
-      this.cookieService.deleteAll();
-      // alert('Tài khoản của bạn đang chờ duyệt!');
-      this.openAlert('Tài khoản của bạn đang chờ duyệt!');
-      this.router.navigate(['login']);
-     }
-   });
+
+    this.http.post(getStatusApi, JSON.stringify({ "username": user.username }), httpOptions)
+      .subscribe((res: any) => {
+        if (res.status == 'VERIFY') {
+          this.router.navigate(['']);
+        } else {
+          localStorage.clear();
+          this.openPromptVerify('Mã xác nhận đã được gửi vào email của bạn. Nhập mã xác nhận vào đây!')
+        }
+      });
   }
 
-  cookieTokenData(tokenData: jwtData) {
+  cookieTokenData(tokenData: jwtData, username: string) {
     currentTokenData = tokenData;
-      this.cookieService.deleteAll();
-      this.cookieService.set('access_token', tokenData.access_token);
-      this.cookieService.set('refresh_token', tokenData.refresh_token);
+    localStorage.clear();
+    localStorage.setItem('username', username);
+    localStorage.setItem('access_token', tokenData.access_token);
+    localStorage.setItem('refresh_token', tokenData.refresh_token);
   }
 
   logout() {
-    this.cookieService.deleteAll();
+    localStorage.clear();
     this.router.navigate(['login']);
   }
 
   registration(username: string, password: string, email: string, fname: string, lname: string) {
-    
+
     let dataRegister = {
       'username': username,
       'password': password,
       'email': email,
-      'fname': fname,
-      'lname': lname,
+      'firstname': fname,
+      'lastname': lname,
 
     }
 
@@ -135,18 +149,17 @@ export class AuthGuardService {
           this.openAlert('Email đã tồn tại! Vui lòng sử dụng email khác.');
         }
         if (res.code == "1000") {
-          this.cookieService.deleteAll();
-          this.openAlert('Đăng kí thành công! Tài khoản của bạn đang chờ duyệt!');
+          localStorage.clear();
+          this.openAlert('Kiểm tra mã mã xác nhận đươc gửi trong mail của bạn!');
+          this.router.navigate(['login']);
+        }
+        if (res.code == "1103") {
+          localStorage.clear();
+          this.openAlert('Không thể gửi email!');
           this.router.navigate(['login']);
         }
       });;
   }
-
-  parseJwt(token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    return JSON.parse(window.atob(base64));
-  };
 
   openAlert(message): void {
     this.dialogService.openAlert({
@@ -156,6 +169,38 @@ export class AuthGuardService {
       title: 'Thông báo!', //OPTIONAL, hides if not provided
       closeButton: 'Đóng', //OPTIONAL, defaults to 'CLOSE'
       width: '450px', //OPTIONAL, defaults to 400px
+    });
+  }
+
+  openPromptVerify(message): void {
+    this.dialogService.openPrompt({
+      message: message,
+      disableClose: true || false, // defaults to false
+      // viewContainerRef: this.viewContainerRef, //OPTIONAL
+      title: 'Xác nhận', //OPTIONAL, hides if not provided
+      value: '', //OPTIONAL
+      cancelButton: 'Huỷ', //OPTIONAL, defaults to 'CANCEL'
+      acceptButton: 'Nhập', //OPTIONAL, defaults to 'ACCEPT'
+      width: '500px', //OPTIONAL, defaults to 400px
+    }).afterClosed().subscribe((value: string) => {
+      if (value) {
+        let httpOptions = {
+          headers: new HttpHeaders({
+            'Authorization': 'Bearer' + localStorage.getItem('access_token'),
+          })
+        };
+        
+        this.http.get(verifyApi + value.toString(), httpOptions ).subscribe( (res : commonRes) =>{
+          if(res.code == '1000'){
+            this.openAlert('Đăng kí thành công!');
+            this.router.navigate(['']);
+          }else{
+            this.openAlert('Không thể xác thực!');
+          }
+        });
+      } else {
+        this.openAlert('Không thể xác thực!');
+      }
     });
   }
 

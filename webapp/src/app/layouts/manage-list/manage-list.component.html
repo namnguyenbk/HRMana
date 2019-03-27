@@ -1,66 +1,6 @@
-<!-- <td-layout>
-  <td-navigation-drawer flex sidenavTitle="{{user_role}}" logo="teradata-dark" name="{{name}}" email="{{email}}">
-    <mat-nav-list>
-      <a mat-list-item>
-        <mat-icon>home</mat-icon>Home
-      </a>
-    </mat-nav-list>
-    <div td-navigation-drawer-menu>
-      <mat-nav-list>
-        <a mat-list-item>
-          <mat-icon>account_box</mat-icon>Profile
-        </a>
-      </mat-nav-list>
-    </div>
-  </td-navigation-drawer>
-  <td-layout-nav logo="assets:teradata" toolbarTitle="HR Managerment" navigationRoute="/">
-    <button mat-icon-button td-menu-button tdLayoutToggle>
-      <mat-icon>menu</mat-icon>
-    </button>
-    <mat-icon>chrome_reader_mode</mat-icon>
-    <td-layout-manage-list opened="true" mode="side" [opened]="media.registerQuery('gt-sm') | async"
-      [mode]="(media.registerQuery('gt-sm') | async) ? 'side' :  'over'"
-      [sidenavWidth]="(media.registerQuery('gt-xs') | async) ? '257px' : '100%'">
-      <mat-toolbar td-sidenav-content>Actions</mat-toolbar>
-      <div td-sidenav-content>
-        <div td-navigation-drawer-menu>
-          <mat-nav-list [tdLayoutManageListClose]="!media.query('gt-sm')">
-            <a mat-list-item>
-              <mat-icon matListIcon>looks_one</mat-icon>Add user
-            </a>
-            <a mat-list-item>
-              <mat-icon matListIcon>looks_two</mat-icon>List employess
-            </a>
-            <a mat-list-item>
-              <mat-icon matListIcon>looks_3</mat-icon> KPI
-            </a>
-            <a mat-list-item>
-              <mat-icon matListIcon>looks_4</mat-icon> Item 4
-            </a>
-            <a mat-list-item>
-              <mat-icon matListIcon>looks_5</mat-icon> Item 5
-            </a>
-          </mat-nav-list>
-        </div>
-      </div>
-      <mat-toolbar>
-        <button mat-button tdLayoutManageListToggle>
-          <mat-icon>list</mat-icon>
-        </button>
-        Dashboard
-      </mat-toolbar>
-      <router-outlet></router-outlet>
-    </td-layout-manage-list>
-    <td-layout-footer>
-      <div layout="row" layout-align="start center">
-        <span class="mat-caption">Copyright &copy; 2019 Nam Nguyen & Huyen Tran. All rights reserved</span>
-      </div>
-    </td-layout-footer>
-  </td-layout-nav>
-</td-layout> -->
 <td-layout>
-  <td-navigation-drawer flex sidenavTitle="Tài khoản" logo="teradata-dark" name="Firstname Lastname"
-    email="firstname.lastname@company.com">
+  <td-navigation-drawer *ngIf="userInfo" flex sidenavTitle="Tài khoản" logo="menu" name="{{userInfo.lname}} {{userInfo.fname}}" 
+    email="{{userInfo.email}}">
     <mat-nav-list>
       <a mat-list-item>
         <mat-icon>home</mat-icon>Trang chủ
@@ -68,7 +8,7 @@
       <a mat-list-item>
         <mat-icon>account_box</mat-icon>Thông tin tài khoản
       </a>
-      <a mat-list-item *ngIf="isRoleAdmin()">
+      <a mat-list-item *ngIf="isRoleAdmin">
           <mat-icon>how_to_reg</mat-icon>Duyệt tài khoản
         </a>
       <a mat-list-item (click)="logout()">
@@ -93,18 +33,12 @@
       <span [routerLink]="['/']" class="cursor-pointer">Quản lí công việc</span>
     </div>
     <div td-toolbar-content layout="row" layout-align="start center" flex>
+       <button mat-icon-button tdLayoutNavListOpen [hideWhenOpened]="true">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
       <span flex></span>
       <a routerLink="/invoices" md-button class="mat-button">Cá nhân</a>
       <a routerLink="/customers" md-button class="mat-button">Nhóm</a>
-      <!-- <a mat-icon-button matTooltip="Docs" href="" target="_blank">
-        <mat-icon>account_circle</mat-icon>
-      </a> -->
-    </div>
-    <div td-toolbar-content flex>
-      <span class="fill-space" flex></span>
-      <a mat-icon-button matTooltip="Docs" href="" target="_blank">
-        <mat-icon>account_circle</mat-icon>
-      </a>
     </div>
     <mat-nav-list td-sidenav-content [tdLayoutNavListClose]="!media.query('gt-sm')">
       <a mat-list-item>

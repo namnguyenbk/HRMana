@@ -17,6 +17,7 @@ import com.springweb.application.model.UsersEntity;
 import com.springweb.application.repository.RoleRepository;
 import com.springweb.application.repository.UsersRepository;
 
+import javax.mail.MessagingException;
 import javax.persistence.Entity;
 
 
@@ -34,7 +35,6 @@ public class UserController {
 	@Autowired
 	UsersSevice usesService;
 
-	private Gson gson = new Gson();
 	@RequestMapping(value="/register",method= RequestMethod.POST)
 	public Map<String, Object> register(@RequestBody UsersEntity user){
 		Map<String, Object> mapResponse=new HashMap<>();
@@ -54,7 +54,7 @@ public class UserController {
 			return  mapResponse;
 		}
 
-		if(userRepository.existsByUsername(user.getUsername())==true) {
+		if(userRepository.existsByUsername(user.getUsername())) {
 			mapResponse.put("code", "1100");
 			return  mapResponse;
 		}
@@ -64,20 +64,21 @@ public class UserController {
 		user.setRole(roleEntity);
 			user.setStatus("UNVERIFY");
 		try {
-			int code = sendEmail(user) ;
-			if (code == 1000){
+			UUID uuid=UUID.randomUUID();
+			String token=uuid.toString();
+			user.setTokenEmail(token);
+			Map<String, Object> res =  sendEmail(user, token) ;
+			if ( res.get("code").equals("1000")){
 				mapResponse.put("code", "1000");
-				userRepository.save(user);
+				userRepository.save((UsersEntity) res.get("userEntity"));
 			}else {
 				mapResponse.put("code", "1103");
 			}
 		} catch (Exception e) {
 			mapResponse.put("code", "1002");
+			e.printStackTrace();
 			return  mapResponse;
 		}
-
-
-
 		return  mapResponse;
 	}
 
@@ -99,23 +100,25 @@ public class UserController {
 		return null;
 	}
 
-	public int sendEmail( UsersEntity user){
-		StringBuilder msgContent=new StringBuilder("http://localhost:9000/verify:");
-		UUID uuid=UUID.randomUUID();
-		String token=uuid.toString();
-		user.setTokenEmail(token);
-		usesService.save(user);
+	public Map<String, Object> sendEmail( UsersEntity user, String token){
+		StringBuilder msgContent=new StringBuilder("Verify code: ");
+		Map<String, Object> res = new HashMap<>();
+
 		msgContent.append(token);
-		int result=emailService.sendEmailTo(user.getEmail(), msgContent.toString());
-		if(result==0) {
-			return 1002;
+		int result;
+		result = emailService.sendEmailTo(user.getEmail(), msgContent.toString());
+		if(result==1) {
+			res.put("code", "1000");
+			res.put("userEntity", user);
 		}
-		else return 1000;
+		else{
+			res.put("code", "1002");
+		}
+		return res;
+
 	}
 
-
-	@PostMapping(value= "/getUserDetailInfo")
-//	@RequestMapping(value="/getUserDetailInfo",method= RequestMethod.POST, produces = {"application/json"})
+	@PostMapping("/getUserDetailInfo")
 	public Map<String, Object> getUserInfoDetail(@RequestBody UsersEntity username){
 		UsersEntity user = null;
 		try {
@@ -125,7 +128,7 @@ public class UserController {
 				userInfo.put("username", user.getUsername());
 				userInfo.put("email", user.getEmail());
 				userInfo.put("status", user.getStatus());
-				userInfo.put("role", user.getRole());
+				userInfo.put("roleId", user.getRole().getId());
 				if(user.getFirstname() != null){
 					userInfo.put("fname", user.getFirstname());
 				}
