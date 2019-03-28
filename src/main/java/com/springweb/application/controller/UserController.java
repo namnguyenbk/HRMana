@@ -1,24 +1,18 @@
 package com.springweb.application.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import com.google.gson.Gson;
-import com.springweb.application.sevice.EmailService;
-import com.springweb.application.sevice.UsersSevice;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
-
 import com.springweb.application.model.RoleEntity;
 import com.springweb.application.model.UsersEntity;
 import com.springweb.application.repository.RoleRepository;
 import com.springweb.application.repository.UsersRepository;
+import com.springweb.application.sevice.EmailService;
+import com.springweb.application.sevice.UsersSevice;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
-import javax.persistence.Entity;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 
 @RestController
