@@ -61,21 +61,4 @@ public class AdminController {
 //		else map.put("code", "1000");
 //		return map;
 //	}
-	
-	
-	
-
-
-	
-
-//	@RequestMapping("/sendEmail")
-//	public Map<String, String> sendEmail(@RequestParam(name="email") String emailAddress){
-//	Map<String, String> map=new HashMap<>();
-//	int result=emailService.sendEmailTo(emailAddress);
-//	if(result==0) {
-//	map.put("err", "Chua gui duoc email");
-//	}else map.put("message", "gui email thanh cong vui long kiem tra email");
-//
-//	return map;
-//	}
 }

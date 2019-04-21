@@ -1,27 +1,25 @@
 package com.springweb.application.model;
 
 import java.sql.Date;
+import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Generated;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+
+import com.springweb.application.model.Emmbeddable.ProjectMemberId;
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+
 
 @Entity
 @Table(name="user")
 public class UsersEntity {
 	@Id
-	@GenericGenerator(name="generator",strategy="guid",parameters= {})
+	@GenericGenerator(name="generator",strategy="guid")
 	@GeneratedValue(generator="generator")
-	@Column(name="userID")
+	@Column(name="userId")
 	private String id;
 	
 	@Column(name="username",columnDefinition = "VARCHAR(40)",unique=true, nullable=false)
@@ -52,11 +50,44 @@ public class UsersEntity {
 	private String tokenEmail;
 	
 	@ManyToOne()
-	@JoinColumn(name="roleID")
+	@JoinColumn(name="roleId")
 	private RoleEntity role;
+
+	@OneToOne(mappedBy = "author")
+	private TaskEntity authoredTask;
+
+	@OneToOne(mappedBy = "assigned")
+	private TaskEntity assignedTask;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+	private Set<ProjectMemberEntity> teams;
+
 
 	public String getId() {
 		return id;
+	}
+
+	public TaskEntity getAuthoredTask() {
+		return authoredTask;
+	}
+
+	public TaskEntity getAssignedTask() {
+		return assignedTask;
+	}
+
+	public void setAssignedTask(TaskEntity assignedTask) {
+		this.assignedTask = assignedTask;
+	}
+
+	public void setAuthoredTask(TaskEntity authoredTask) {
+		this.authoredTask = authoredTask;
+	}
+	public Set<ProjectMemberEntity> getTeams() {
+		return teams;
+	}
+
+	public void setTeams(Set<ProjectMemberEntity> teams) {
+		this.teams = teams;
 	}
 
 	public void setId(String id) {
@@ -146,8 +177,8 @@ public class UsersEntity {
 	public UsersEntity() {
 		super();
 	}
-	
-	
+
+
 	
 	
 }

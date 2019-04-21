@@ -14,6 +14,9 @@ import com.springweb.application.model.UsersEntity;
 import com.springweb.application.repository.RoleRepository;
 import com.springweb.application.repository.UsersRepository;
 
+import java.util.Iterator;
+import java.util.List;
+
 @SpringBootApplication
 @Configurable
 public class SpringWebApplication {
@@ -31,7 +34,7 @@ public class SpringWebApplication {
 	UsersRepository userRepository;
 	
 	@Bean
-	public void addAdmin() {
+	public void initSeedAndDemoData() {
 		
 		RoleEntity roleAdmin=roleRepository.findByName("admin");
 		if(roleAdmin==null) {
@@ -51,8 +54,20 @@ public class SpringWebApplication {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
 		}
+
+//		RoleEntity roleProject = roleRepository.findByName("project");
+//
+//		if(roleUser==null) {
+//			try {
+//				roleUser=new RoleEntity(2, "user", "Phân quyền user");
+//				roleRepository.save(roleUser);
+//
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//
+//		}
 		
 		UsersEntity admin=userRepository.findByEmail("admin@gmail.com");
 		if(admin==null) {
@@ -66,6 +81,7 @@ public class SpringWebApplication {
 				admin.setRole(roleAdmin);
 				userRepository.save(admin);
 		}
+
 		
 		
 	}
