@@ -19,7 +19,7 @@ public class UsersEntity {
 	@Id
 	@GenericGenerator(name="generator",strategy="guid")
 	@GeneratedValue(generator="generator")
-	@Column(name="userId")
+	@Column(name="userID")
 	private String id;
 	
 	@Column(name="username",columnDefinition = "VARCHAR(40)",unique=true, nullable=false)
@@ -50,7 +50,7 @@ public class UsersEntity {
 	private String tokenEmail;
 	
 	@ManyToOne()
-	@JoinColumn(name="roleId")
+	@JoinColumn(name="roleID")
 	private RoleEntity role;
 
 	@OneToOne(mappedBy = "author")

@@ -14,18 +14,19 @@ import java.util.Set;
 @Table(name="project_member")
 public class ProjectMemberEntity {
 
-    @EmbeddedId
-    private ProjectMemberId projectMemberId;
+    @Id
+    @GenericGenerator(name="generator",strategy="guid")
+    @GeneratedValue(generator="generator")
+    @Column(name="project_member_id")
+    private String projectMemberId;
 
     @ManyToOne
-    @MapsId("project_id")
-    @JoinColumn(name = "project_id")
+    @JoinColumn(name = "project_id", referencedColumnName = "project_id")
     private ProjectEntity project;
 
     @ManyToOne()
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "member_id", referencedColumnName = "userID")
     private UsersEntity member;
-
 
     @Column(name="mem_role_id",columnDefinition="nvarchar(64)", nullable=false)
     private String memRoleId;

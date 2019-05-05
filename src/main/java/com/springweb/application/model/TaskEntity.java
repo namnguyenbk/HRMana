@@ -1,7 +1,10 @@
 package com.springweb.application.model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -17,7 +20,7 @@ public class TaskEntity {
     @GenericGenerator(name="generator",strategy="guid")
     @GeneratedValue(generator="generator")
     @Column(name="task_id")
-    private String task_id;
+    private String taskId;
 
     @Column(name="task_code",columnDefinition = "nvarchar(128)",nullable=false)
     private String taskCode;
@@ -26,7 +29,7 @@ public class TaskEntity {
     private String taskName;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn( name = "project_id")
+    @JoinColumn( name = "project_id", referencedColumnName = "project_id")
     private ProjectEntity project ;
 
     @Column(name="status_id",columnDefinition="nvarchar(64)", nullable=false)
@@ -42,11 +45,11 @@ public class TaskEntity {
     private String created;
 
     @OneToOne()
-    @JoinColumn(name = "userId", insertable = false, updatable = false)
+    @JoinColumn(name = "authorId", referencedColumnName = "userID")
     private UsersEntity author;
 
     @OneToOne()
-    @JoinColumn(name = "userId",  insertable = false, updatable = false)
+    @JoinColumn(name = "assigned", referencedColumnName = "userID")
     private UsersEntity assigned;
 
     @Column(name="tag",columnDefinition="nvarchar(64)", nullable=false)
@@ -58,5 +61,22 @@ public class TaskEntity {
     @Column(name="description",columnDefinition="nvarchar(512)", nullable=false)
     private String description;
 
+    public TaskEntity(String taskCode, String taskName, ProjectEntity project,
+                      String statusId, String activityId, String commentId,
+                      String created, UsersEntity author, UsersEntity assigned,
+                      String tag, String dueDate, String description) {
+        this.taskCode = taskCode;
+        this.taskName = taskName;
+        this.project = project;
+        this.statusId = statusId;
+        this.activityId = activityId;
+        this.commentId = commentId;
+        this.created = created;
+        this.author = author;
+        this.assigned = assigned;
+        this.tag = tag;
+        this.dueDate = dueDate;
+        this.description = description;
+    }
 
 }
