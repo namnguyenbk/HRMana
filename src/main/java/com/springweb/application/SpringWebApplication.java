@@ -34,7 +34,7 @@ public class SpringWebApplication {
 	UsersRepository userRepository;
 	
 	@Bean
-	public void initSeedAndDemoData() {
+	public void addAdmin() {
 		
 		RoleEntity roleAdmin=roleRepository.findByName("admin");
 		if(roleAdmin==null) {

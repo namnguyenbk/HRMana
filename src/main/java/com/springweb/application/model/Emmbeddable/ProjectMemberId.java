@@ -1,7 +1,6 @@
 package com.springweb.application.model.Emmbeddable;
 
-import com.springweb.application.model.ProjectEntity;
-import com.springweb.application.model.UsersEntity;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

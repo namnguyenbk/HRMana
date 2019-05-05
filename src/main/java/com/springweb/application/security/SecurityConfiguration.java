@@ -20,40 +20,41 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Configurable
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-	@Autowired
-	CustomUserDetailsService customDetailSService;
-	
+    @Autowired
+    CustomUserDetailsService customDetailSService;
 
-	@Bean
-	public PasswordEncoder encoder() {
-		return new BCryptPasswordEncoder();
-	}
-	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth ) throws Exception {
-		
-		auth.userDetailsService(customDetailSService).passwordEncoder(encoder());
-	}
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        auth.userDetailsService(customDetailSService).passwordEncoder(encoder());
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
 //		http.requestMatchers().antMatchers("register")
-		
-		http.csrf().disable();
-		http.authorizeRequests()
-			.anyRequest().authenticated()
-			.and()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER);
 
-			
-	}
-	
-	@Override
+        http.csrf().disable();
+        http.authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER);
 
-	@Bean
-	public AuthenticationManager authenticationManager() throws Exception{
-		return super.authenticationManager();
-	}
+
+    }
+
+    @Override
+
+    @Bean
+    public AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
 }
 

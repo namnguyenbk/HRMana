@@ -14,11 +14,12 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/register")
-                .permitAll()
+                .antMatchers(HttpMethod.POST, "/register").permitAll()
                 .antMatchers("/getUserDetailInfo").permitAll()
-                .antMatchers(HttpMethod.POST, "/getStatusUser")
-                .permitAll()
+                .antMatchers(HttpMethod.POST, "/getStatusUser").permitAll()
+                .antMatchers(HttpMethod.POST, "/project/addpro").permitAll()
+                .antMatchers(HttpMethod.POST, "/project/listpro").permitAll()
+                .antMatchers(HttpMethod.POST, "/task/addtask").permitAll()
                 .antMatchers("/hello").access("hasRole('user')")
                 .anyRequest()
                 .authenticated();
