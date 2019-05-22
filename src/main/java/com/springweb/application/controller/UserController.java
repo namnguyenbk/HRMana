@@ -95,7 +95,7 @@ public class UserController {
 	}
 
 	public Map<String, Object> sendEmail( UsersEntity user, String token){
-		StringBuilder msgContent=new StringBuilder("Verify http://localhost:9000/verify:");
+		StringBuilder msgContent=new StringBuilder("Verify http://localhost:9090/verify:");
 		Map<String, Object> res = new HashMap<>();
 
 		msgContent.append(token);
