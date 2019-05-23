@@ -53,42 +53,42 @@ public class UsersEntity {
 	@JoinColumn(name="roleID")
 	private RoleEntity role;
 
-	@OneToOne(mappedBy = "author")
-	private TaskEntity authoredTask;
+//	@OneToOne(mappedBy = "author")
+//	private TaskEntity authoredTask;
+//
+//	@OneToOne(mappedBy = "assigned")
+//	private TaskEntity assignedTask;
 
-	@OneToOne(mappedBy = "assigned")
-	private TaskEntity assignedTask;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
-	private Set<ProjectMemberEntity> teams;
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+//	private Set<ProjectMemberEntity> teams;
 
 
 	public String getId() {
 		return id;
 	}
 
-	public TaskEntity getAuthoredTask() {
-		return authoredTask;
-	}
+//	public TaskEntity getAuthoredTask() {
+//		return authoredTask;
+//	}
+//
+//	public TaskEntity getAssignedTask() {
+//		return assignedTask;
+//	}
+//
+//	public void setAssignedTask(TaskEntity assignedTask) {
+//		this.assignedTask = assignedTask;
+//	}
+//
+//	public void setAuthoredTask(TaskEntity authoredTask) {
+//		this.authoredTask = authoredTask;
+//	}
+//	public Set<ProjectMemberEntity> getTeams() {
+//		return teams;
+//	}
 
-	public TaskEntity getAssignedTask() {
-		return assignedTask;
-	}
-
-	public void setAssignedTask(TaskEntity assignedTask) {
-		this.assignedTask = assignedTask;
-	}
-
-	public void setAuthoredTask(TaskEntity authoredTask) {
-		this.authoredTask = authoredTask;
-	}
-	public Set<ProjectMemberEntity> getTeams() {
-		return teams;
-	}
-
-	public void setTeams(Set<ProjectMemberEntity> teams) {
-		this.teams = teams;
-	}
+//	public void setTeams(Set<ProjectMemberEntity> teams) {
+//		this.teams = teams;
+//	}
 
 	public void setId(String id) {
 		this.id = id;
@@ -178,7 +178,4 @@ public class UsersEntity {
 		super();
 	}
 
-
-	
-	
 }

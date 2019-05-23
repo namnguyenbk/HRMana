@@ -1,6 +1,7 @@
 package com.springweb.application.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,9 +29,11 @@ public class TaskEntity {
     @Column(name="task_name",columnDefinition = "nvarchar(128)",nullable=false)
     private String taskName;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn( name = "project_id", referencedColumnName = "project_id")
-    private ProjectEntity project ;
+//    @JsonIgnore
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn( name = "project_id", referencedColumnName = "project_id")
+    @Column(name="project_id",columnDefinition="nvarchar(64)", nullable=false, unique = false)
+    private String project ;
 
     @Column(name="status_id",columnDefinition="nvarchar(64)", nullable=false)
     private String statusId;
@@ -44,39 +47,43 @@ public class TaskEntity {
     @Column(name="created",columnDefinition="nvarchar(64)", nullable=false)
     private String created;
 
-    @OneToOne()
-    @JoinColumn(name = "authorId", referencedColumnName = "userID")
-    private UsersEntity author;
+//    @JsonIgnore
+//    @OneToOne()
+//    @JoinColumn(name = "authorId", referencedColumnName = "userID")
+    @Column(name="author",columnDefinition="nvarchar(64)", nullable=true)
+    private String author;
 
-    @OneToOne()
-    @JoinColumn(name = "assigned", referencedColumnName = "userID")
-    private UsersEntity assigned;
+//    @JsonIgnore
+//    @OneToOne()
+//    @JoinColumn(name = "assigned", referencedColumnName = "userID")
+    @Column(name="assigned",columnDefinition="nvarchar(64)", nullable=true)
+    private String assigned;
 
-    @Column(name="tag",columnDefinition="nvarchar(64)", nullable=false)
+    @Column(name="tag",columnDefinition="nvarchar(64)", nullable=true)
     private String tag;
 
     @Column(name="due_date",columnDefinition="nvarchar(64)", nullable=false)
     private String dueDate;
 
-    @Column(name="description",columnDefinition="nvarchar(512)", nullable=false)
+    @Column(name="description",columnDefinition="nvarchar(512)", nullable=true)
     private String description;
 
-    public TaskEntity(String taskCode, String taskName, ProjectEntity project,
-                      String statusId, String activityId, String commentId,
-                      String created, UsersEntity author, UsersEntity assigned,
-                      String tag, String dueDate, String description) {
-        this.taskCode = taskCode;
-        this.taskName = taskName;
-        this.project = project;
-        this.statusId = statusId;
-        this.activityId = activityId;
-        this.commentId = commentId;
-        this.created = created;
-        this.author = author;
-        this.assigned = assigned;
-        this.tag = tag;
-        this.dueDate = dueDate;
-        this.description = description;
-    }
+//    public TaskEntity(String taskCode, String taskName, ProjectEntity project,
+//                      String statusId, String activityId, String commentId,
+//                      String created, UsersEntity author, UsersEntity assigned,
+//                      String tag, String dueDate, String description) {
+//        this.taskCode = taskCode;
+//        this.taskName = taskName;
+//        this.project = project;
+//        this.statusId = statusId;
+//        this.activityId = activityId;
+//        this.commentId = commentId;
+//        this.created = created;
+//        this.author = author;
+//        this.assigned = assigned;
+//        this.tag = tag;
+//        this.dueDate = dueDate;
+//        this.description = description;
+//    }
 
 }

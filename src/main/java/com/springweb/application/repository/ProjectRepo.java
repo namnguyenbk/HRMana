@@ -13,5 +13,6 @@ public interface ProjectRepo  extends JpaRepository<ProjectEntity, String> {
     List<ProjectEntity> findAll(Sort sort);
 
     ProjectEntity findByProjectId( String id);
-    List<ProjectEntity> findProjectEntitiesByOwnerIdAndStatusIdAndType(String ownerId, String statusId, String type);
+//    List<ProjectEntity> findProjectEntitiesByOwnerIdAndStatusIdAndType(String ownerId, String statusId, String type);
+//    void deleteAllBy
 }

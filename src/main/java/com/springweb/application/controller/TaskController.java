@@ -78,10 +78,22 @@ public class TaskController {
         String created = DateFormat.getInstance().format(new Date());
 
         TaskEntity newTask = new TaskEntity(
-                taskCode, taskName, project, "CREATED",
-                "", "", created,
-                ownerTask, assignedUser, tag, dueDate, description
+//                taskCode, taskName, project, "CREATED",
+//                "", "", created,
+//                ownerTask, assignedUser, tag, dueDate, description
         );
+        newTask.setTaskCode(taskCode);
+        newTask.setTaskName(taskName);
+        newTask.setProject(project.getProjectId());
+        newTask.setStatusId("CREATED");
+//        newTask.setCommentId("");
+//        newTask.setac(taskCode);
+        newTask.setCreated(created);
+        newTask.setAuthor(author);
+        newTask.setAssigned(assigned);
+        newTask.setTag(tag);
+        newTask.setDueDate(dueDate);
+        newTask.setDescription(description + "!");
 
         try{
             newTask = taskRepo.save( newTask);

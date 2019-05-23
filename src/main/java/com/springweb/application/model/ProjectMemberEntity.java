@@ -1,6 +1,7 @@
 package com.springweb.application.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springweb.application.model.Emmbeddable.ProjectMemberId;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -24,9 +25,10 @@ public class ProjectMemberEntity {
     @JoinColumn(name = "project_id", referencedColumnName = "project_id")
     private ProjectEntity project;
 
-    @ManyToOne()
-    @JoinColumn(name = "member_id", referencedColumnName = "userID")
-    private UsersEntity member;
+//    @Id
+    @Column(name="member_id",columnDefinition="nvarchar(64)", nullable=false)
+//    @JoinColumn(name = "member_id", referencedColumnName = "userID")
+    private String member;
 
     @Column(name="mem_role_id",columnDefinition="nvarchar(64)", nullable=false)
     private String memRoleId;

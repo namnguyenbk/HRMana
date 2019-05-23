@@ -1,6 +1,7 @@
 package com.springweb.application.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -25,8 +26,9 @@ public class ProjectEntity {
     @Column(name="project_name",columnDefinition = "nvarchar(128)",nullable=false)
     private String projectName;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
-    private  Set<TaskEntity> listTasks ;
+//    @JsonIgnore
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+//    private  Set<TaskEntity> listTasks ;
 
     @Column(name="type",columnDefinition="nvarchar(64)", nullable=false)
     private String type;
@@ -42,5 +44,8 @@ public class ProjectEntity {
 
     @Column(name="theme",columnDefinition="nvarchar(64)", nullable=true)
     private String theme;
+
+    @Column(name="listMember",columnDefinition="nvarchar(64)", nullable=true)
+    private String listMember;
 
 }
