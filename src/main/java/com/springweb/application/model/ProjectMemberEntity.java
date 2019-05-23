@@ -33,4 +33,35 @@ public class ProjectMemberEntity {
 //
     @Column(name="from_date",columnDefinition="nvarchar(64)", nullable=true)
     private String created ;
+	public String getProjectMemberId() {
+		return projectMemberId;
+	}
+	public void setProjectMemberId(String projectMemberId) {
+		this.projectMemberId = projectMemberId;
+	}
+	public ProjectEntity getProject() {
+		return project;
+	}
+	public void setProject(ProjectEntity project) {
+		this.project = project;
+	}
+	public UsersEntity getMember() {
+		return member;
+	}
+	public void setMember(UsersEntity member) {
+		this.member = member;
+	}
+	public String getMemRoleId() {
+		return memRoleId;
+	}
+	public void setMemRoleId(String memRoleId) {
+		this.memRoleId = memRoleId;
+	}
+	public String getCreated() {
+		return created;
+	}
+	public void setCreated(String created) {
+		this.created = created;
+	}
+    
 }

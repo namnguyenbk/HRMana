@@ -79,4 +79,109 @@ public class TaskEntity {
         this.description = description;
     }
 
+	public String getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(String taskId) {
+		this.taskId = taskId;
+	}
+
+	public String getTaskCode() {
+		return taskCode;
+	}
+
+	public void setTaskCode(String taskCode) {
+		this.taskCode = taskCode;
+	}
+
+	public String getTaskName() {
+		return taskName;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+
+	public ProjectEntity getProject() {
+		return project;
+	}
+
+	public void setProject(ProjectEntity project) {
+		this.project = project;
+	}
+
+	public String getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(String statusId) {
+		this.statusId = statusId;
+	}
+
+	public String getActivityId() {
+		return activityId;
+	}
+
+	public void setActivityId(String activityId) {
+		this.activityId = activityId;
+	}
+
+	public String getCommentId() {
+		return commentId;
+	}
+
+	public void setCommentId(String commentId) {
+		this.commentId = commentId;
+	}
+
+	public String getCreated() {
+		return created;
+	}
+
+	public void setCreated(String created) {
+		this.created = created;
+	}
+
+	public UsersEntity getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(UsersEntity author) {
+		this.author = author;
+	}
+
+	public UsersEntity getAssigned() {
+		return assigned;
+	}
+
+	public void setAssigned(UsersEntity assigned) {
+		this.assigned = assigned;
+	}
+
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+	public String getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(String dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+    
+
 }

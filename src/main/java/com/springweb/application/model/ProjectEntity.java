@@ -43,4 +43,77 @@ public class ProjectEntity {
     @Column(name="theme",columnDefinition="nvarchar(64)", nullable=true)
     private String theme;
 
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
+
+	public String getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(String ownerId) {
+		this.ownerId = ownerId;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public Set<TaskEntity> getListTasks() {
+		return listTasks;
+	}
+
+	public void setListTasks(Set<TaskEntity> listTasks) {
+		this.listTasks = listTasks;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getCreated() {
+		return created;
+	}
+
+	public void setCreated(String created) {
+		this.created = created;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(String statusId) {
+		this.statusId = statusId;
+	}
+
+	public String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
+    
+
 }
